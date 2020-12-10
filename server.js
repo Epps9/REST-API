@@ -1,7 +1,10 @@
 const express = require('express');
+const router = express.Router();
 const db = require('./db');
+
 const testimonialsRoutes = require('./routes/testimonials.routes.js');
-const concertsRoutes = require('./routes/concerts.routes');
+const concertsRoutes = require('./routes/concerts.routes.js');
+const seatsRoutes = require('./routes/seats.routes.js')
 
 const app = express();
 
@@ -10,6 +13,7 @@ app.use(express.json());
 
 app.use('/', testimonialsRoutes);
 app.use('/', concertsRoutes);
+app.use('/', seatsRoutes);
 
 
 app.use((req, res) => {

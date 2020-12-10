@@ -3,12 +3,13 @@ const router = express.Router();
 const db = require('../db');
 const { uuid } = require('uuidv4');
 
+
 router.route('/testimonials').get((req, res) => {
-    res.send(db.testimonials);
+    res.json(db.testimonials);
 });
 
 router.route('/testimonials/random').get((req, res) => {
-    res.send(db.testimonials[Math.floor(Math.random() * db.testimonials.length)]);
+    res.json(db.testimonials[Math.floor(Math.random() * db.testimonials.length)]);
 });
 
 router.route('/testimonials/:id').get((req, res) => {
@@ -48,11 +49,11 @@ router.route('/testimonials/:id').put((req, res) => {
 });
 
 router.route('/testimonials/:id').delete((req, res) => {
-    const element = db.filter(
+    const element = db.testimonials.filter(
       (element) => element.id === parseInt(req.params.id)
     );
-    const index = db.indexOf(element);
-    db.splice(index, 1);
+    const index = db.testimonials.indexOf(element);
+    db.testimonials.splice(index, 1);
 
     return res.json({ message: 'OK' });
   });
