@@ -5,15 +5,20 @@ const db = require('./db');
 const testimonialsRoutes = require('./routes/testimonials.routes.js');
 const concertsRoutes = require('./routes/concerts.routes.js');
 const seatsRoutes = require('./routes/seats.routes.js')
+const cors = require('cors')
 
 const app = express();
+
+
+app.use(cors());
+
 
 app.use(express.urlencoded({ extended: false })); 
 app.use(express.json());
 
-app.use('/', testimonialsRoutes);
-app.use('/', concertsRoutes);
-app.use('/', seatsRoutes);
+app.use('/api', testimonialsRoutes);
+app.use('/api', concertsRoutes);
+app.use('/api', seatsRoutes);
 
 
 app.use((req, res) => {
