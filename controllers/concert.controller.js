@@ -36,8 +36,12 @@ exports.changeOne = async (req, res) => {
     const { id, performer, genre, price, day, image } = req.body;
   
     try{
-     await Concert.updateOne({_id: req.params.id}, { $set: {id: id, performer: performer, genre: genre, price: price, day: day, image: image} });
-     res.json({message: 'OK'});
+     const crt = await(Concert.findById(req.params.id));
+     if(crt) {
+      await Concert.updateOne({_id: req.params.id}, { $set: {id: id, performer: performer, genre: genre, price: price, day: day, image: image} });
+      res.json({message: 'OK'});
+     } 
+     else res.status(404).json({message: 'Not found...'});
     }
     catch(err) {
       res.status(500).json({ message: err });
