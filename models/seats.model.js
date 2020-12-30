@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const seatSchema = new.mongoose.Schema({
+const seatSchema = new mongoose.Schema({
     id: {type: Number, required: true},
     day: {type: Number, required: true},
     seat: {type: Number, required: true},
