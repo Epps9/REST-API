@@ -29,7 +29,7 @@ app.use((req, res) => {
 });
 
 // connects our backend code with the database
-mongoose.connect('mongodb+srv://Ewa:<password>@cluster0.wsukt.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://Ewa:kodilla@cluster0.wsukt.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
