@@ -1,64 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
-const { uuid } = require('uuidv4');
-const Seat = require('../models/seats.model');
+const SeatController = require('../controllers/seats.controller');
 
 
-router.route('/seats').get((req, res)=> {
-    res.json(db.seats);
-});
+router.get('/seats', SeatController.getAll);
 
-
-router.route('/seats/:id').get((req, res) => {
-    const element = db.seats.filter(
-        (element) => element.id === parseInt(req.params.id)
-    );
-    res.json(element)
-});
-
-router.route('/seats').post((req, res) => {
-    const { day, seat, client, email} = req.body
-
-    const newSeat = {
-        id: uuid(),
-        day,
-        seat,
-        client,
-        email
-    };
-
-    db.seats.push(newSeat);
-
-    return res.json({message: 'OK'});
-})
-
-router.route('/seats/:id').delete((req, res) => {
-    const element = db.seats.filter(
-      (element) => element.id === parseInt(req.params.id)
-    );
-    const index = db.seats.indexOf(element);
-    db.seats.splice(index, 1);
+router.get('/seats/:id', SeatController.getById);
   
-    return res.json({ message: 'OK' });
-  });
+router.post('/seats', SeatController.postOne);
 
-router.route('/seats/:id').put((req, res) => {
-    const { day, seat, client, email } = req.body;
-    const element = db.seats.filter(
-        (element) => element.id === parseInt(req.params.id)
-    );
-    const index = db.seats.indexOf(element);
-    const newSeat = {
-        day: req.params.day,
-        seat: req.params.seat,
-        client: req.params.client,
-        email: req.params.email,
-    };
-    db.seats.splice(index, 1, newSeat);
+router.put('/departments/:id', SeatController.changeOne);
 
-    return res.json({ message: 'OK' });
-});
+router.delete('/departments/:id', SeatController.deleteOne);
 
 
 module.exports = router;
