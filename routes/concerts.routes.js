@@ -17,7 +17,7 @@ router.get('/concerts/performer/:performer', ConcertController.findPerformer);
 
 router.get('/concerts/genre/:genre', ConcertController.findGenre);
 
-router.get('/concerts/genre/:genre', ConcertController.priceRange);
+router.get('/concerts/price/:price_min/:price_max', ConcertController.priceRange);
 
 router.get('/concerts/genre/:genre', ConcertController.findDay);
 
