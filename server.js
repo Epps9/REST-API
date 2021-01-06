@@ -1,5 +1,4 @@
 const express = require('express');
-const router = express.Router();
 const path = require('path');
 const mongoose = require('mongoose');
 
@@ -38,10 +37,11 @@ db.once('open', () => {
 db.on('error', err => console.log('Error ' + err));
 
     
-app.listen(process.env.PORT || 4000, () => {
+const server = app.listen(process.env.PORT || 4000, () => {
   console.log('Server is running on port: 4000');
 });
 
+module.exports = server;
 
 
 
