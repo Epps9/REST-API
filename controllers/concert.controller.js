@@ -65,7 +65,7 @@ exports.deleteOne = async (req, res) => {
 exports.findPerformer = async (req,res) => {
 
   try {
-    const performer = await Concert.findOne({peformer: req.params.performer});
+    const performer = await Concert.find({peformer: req.params.performer});
     res.json(performer);
   }
   catch(err) {
@@ -85,13 +85,13 @@ exports.findPerformer = async (req,res) => {
     }
 
 exports.priceRange = async (req,res) => {
-  const {priceMin, priceMax} = req.body;
+  const {price_min, price_max} = req.body;
   try {
     const allConcerts = await Concert.find();
     for(let concert of allConcerts) {
-      if (concert.price >= priceMin && concert.price <= priceMax) {
-        return concert;
+      if (concert.price >= price_min && concert.price <= price_max) {
       }
+      return concert;
     }
     res.json(concert);
   }
