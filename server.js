@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 
 const testimonialsRoutes = require('./routes/testimonials.routes.js');
 const concertsRoutes = require('./routes/concerts.routes.js');
@@ -10,6 +11,7 @@ const app = express();
 
 const cors = require('cors');
 app.use(cors());
+app.use(helmet());
 
 app.use(express.urlencoded({ extended: false })); 
 app.use(express.json());
