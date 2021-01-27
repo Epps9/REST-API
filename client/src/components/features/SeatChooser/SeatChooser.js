@@ -7,15 +7,15 @@ import './SeatChooser.scss';
 class SeatChooser extends React.Component {
   
   componentDidMount() {
-    const {loadSeatsData} = this.props;
+    const {loadSeatsData, loadSeats} = this.props;
     this.socket = io.connect('localhost:4000');
     this.socket.on('seatsUpdated', seats => loadSeatsData(seats))
-    const { loadSeats } = this.props;
     loadSeats();
     this.interval = setInterval(() => {
       loadSeats();
     }, 120000);
   }
+
 
   componentWillUnmount() {
     clearInterval(this.interval);
@@ -39,9 +39,12 @@ class SeatChooser extends React.Component {
   render() {
 
     const { prepareSeat } = this;
-    const { requests } = this.props;
+    const { requests, seats, chosenDay } = this.props;
+    const bookedSeats = (seats.filter(seat => seat.day === chosenDay)).length;
+    const freeSeats = 50 - bookedSeats;
 
     return (
+      <div>
       <div>
         <h3>Pick a seat</h3>
         <small id="pickHelp" className="form-text text-muted ml-2"><Button color="secondary" /> – seat is already taken</small>
@@ -50,6 +53,8 @@ class SeatChooser extends React.Component {
         { (requests['LOAD_SEATS'] && requests['LOAD_SEATS'].pending) && <Progress animated color="primary" value={50} /> }
         { (requests['LOAD_SEATS'] && requests['LOAD_SEATS'].error) && <Alert color="warning">Couldn't load seats...</Alert> }
       </div>
+      <div>Free seats: {freeSeats} / 50</div>
+    </div>  
     )
   };
 }
