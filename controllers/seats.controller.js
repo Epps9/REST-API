@@ -21,19 +21,23 @@ exports.getById = async (req, res) => {
     }
   }
 
-exports.postOne =  async (req, res) => {
-
+  exports.postOne = async(req,res) => {
+    const {id, day, seat, client, email} = req.body;
     try {
-  
-      const { id, day, seat, client, email } = req.body;
-      const newSeat = new Seat({ id: id, day: day, seat: seat, client: client, email: email });
-      await newSeat.save();
-      res.json({ message: 'OK' });
-  
-    } catch(err) {
-      res.status(500).json({ message: err });
+        const newSeat = new Seats({
+            id: id,
+            day: day,
+            seat: seat,
+            client: client,
+            email: email
+        });
+        await newSeat.save();
+        res.json(newSeat);
+        req.io.broadcast.emit('seatsUpdated', Seats);
+    } catch (err) {
+        res.status(500).json({message: err});
     }
-  }
+  };
 
 exports.changeOne = async (req, res) => {
     const { id, day, seat, client, email } = req.body;

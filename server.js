@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
+const socket = require('socket.io');
 
 const testimonialsRoutes = require('./routes/testimonials.routes.js');
 const concertsRoutes = require('./routes/concerts.routes.js');
@@ -12,6 +13,11 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 app.use(helmet());
+
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 app.use(express.urlencoded({ extended: false })); 
 app.use(express.json());
@@ -44,6 +50,14 @@ const server = app.listen(process.env.PORT || 4000, () => {
 });
 
 module.exports = server;
+
+const io = socket(server);
+
+io.on('connection', (socket) => {
+  console.log('New client! Its id – ' + socket.id);
+
+  //socket.on('message', doSomething);
+});
 
 
 
