@@ -24,7 +24,7 @@ exports.getById = async (req, res) => {
   exports.postOne = async(req,res) => {
     const {id, day, seat, client, email} = req.body;
     try {
-        const newSeat = new Seats({
+        const newSeat = new Seat({
             id: id,
             day: day,
             seat: seat,
@@ -33,7 +33,7 @@ exports.getById = async (req, res) => {
         });
         await newSeat.save();
         res.json(newSeat);
-        req.io.broadcast.emit('seatsUpdated', Seats);
+        req.io.broadcast.emit('seatsUpdated', Seat);
     } catch (err) {
         res.status(500).json({message: err});
     }
